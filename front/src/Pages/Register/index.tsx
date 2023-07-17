@@ -13,14 +13,16 @@ import InputControled from '../../Components/Input/Controled';
 
 type FormInputs = {
   username: string;
+  name: string;
   password: string;
 };
 
-const Login: React.FC = () => {
+const Register: React.FC = () => {
   const navigate = useNavigate();
 
   const validationSchema = Yup.object().shape({
     username: Yup.string().required('Por favor informe seu username'),
+    name: Yup.string().required('Por favor informe seu nome'),
     password: Yup.string().required('Por favor informe sua senha'),
   });
 
@@ -33,34 +35,43 @@ const Login: React.FC = () => {
   });
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    const response = await window.FakerApi.post('/login', data);
+    const response = await window.FakerApi.post('/register', data);
 
     if (response.success) {
       toast.success(response.message);
       setTimeout(() => {
-        navigate('/home');
+        navigate('/');
       }, 1000);
       return;
     }
-
     toast.error(response.message);
   };
 
   return (
     <>
       <div className="h-full grid place-items-center">
-        <div className="flex h-[80%] w-[90%] rounded-lg shadow-lg">
+        <div className="bg-zinc-800 flex h-[80%] w-[90%] rounded-lg shadow-lg">
           <div className="w-full sm:w-[30%] flex-col justify-center p-6 rounded shadow-md bg-zinc-50">
             <h1 className="text-4xl mb-1 text-violet-900 font-semibold">
               Máquina de Posts
             </h1>
 
             <h4 className="text-sm mb-2 text-zinc-600">
-              Faça login ou cadastre-se para obter acesso a nossa plataforma
+              Faça o seu cadastro para obter acesso a nossa plataforma
             </h4>
 
-            <form className="h-[65%] flex flex-col justify-center space-y-3 mb-2">
-              <h2 className="text-2xl mb-2 font-semibold">Login</h2>
+            <form className="h-[75%] flex flex-col justify-center space-y-2 mb-2">
+              <h2 className="text-2xl font-semibold">Cadastro</h2>
+
+              <InputControled
+                name="name"
+                id="name"
+                type="text"
+                label="Nome"
+                placeholder="Digite seu nome"
+                control={control}
+                errorMsg={errors.name?.message}
+              />
 
               <InputControled
                 name="username"
@@ -83,19 +94,16 @@ const Login: React.FC = () => {
               />
 
               <Button
-                label="Entrar"
+                label="Cadastrar"
                 loading={isSubmitting}
                 onClick={handleSubmit(onSubmit)}
               />
             </form>
 
             <p className="font-semibold">
-              Ainda não possui cadastro ?{' '}
-              <span
-                onClick={() => navigate('/register')}
-                className="text-blue-800 font-semibold cursor-pointer"
-              >
-                Cadastre-se aqui
+              Já tem cadastro ?{' '}
+              <span className="text-blue-800 font-semibold cursor-pointer">
+                Fazer login
               </span>
             </p>
           </div>
@@ -108,4 +116,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default Register;

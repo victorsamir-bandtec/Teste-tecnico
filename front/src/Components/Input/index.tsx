@@ -5,7 +5,6 @@ export type InputProps = {
   password?: boolean;
   label: string;
   id: string;
-
   errorMsg?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
 
@@ -21,16 +20,13 @@ const Input: React.FC<InputProps> = ({
   return (
     <>
       <div className="h-24 flex flex-col mb-3">
-        <label
-          className="mb-1 ml-1 text-xl font-semibold text-zinc-800"
-          htmlFor={id}
-        >
+        <label className="mb-1 ml-1 text-xl font-semibold" htmlFor={id}>
           {label}
         </label>
 
         <div className="w-full flex items-center justify-between rounded-lg bg-white border border-zinc-600">
           <input
-            className="w-[85%] p-2 rounded-lg outline-none text-zinc-800 bg-white"
+            className="w-[85%] p-2 rounded-lg outline-none bg-white"
             type={eye ? 'text' : 'password'}
             id={id}
             {...rest}
@@ -40,14 +36,14 @@ const Input: React.FC<InputProps> = ({
             <>
               {eye ? (
                 <div
-                  className="text-xl mr-4 text-zinc-800 cursor-pointer"
+                  className="text-xl mr-4 cursor-pointer"
                   onClick={() => setEye((prev) => !prev)}
                 >
                   <FaEye />
                 </div>
               ) : (
                 <div
-                  className="text-xl mr-4  text-zinc-800 cursor-pointer"
+                  className="text-xl mr-4 cursor-pointer"
                   onClick={() => setEye((prev) => !prev)}
                 >
                   <FaEyeSlash />
